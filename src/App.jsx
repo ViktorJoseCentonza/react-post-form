@@ -2,51 +2,69 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
+  const [formData, setFormData] = useState({
+    author: 'author',
+    title: 'title',
+    body: 'body',
+    public: false
+  })
+
+
+  function handleFormData(e) {
+    const value =
+      e.target.type === "checkbox" ?
+        e.target.checked : e.target.value;
+
+    setFormData((formData) => ({
+      ...formData,
+      [e.target.name]: value,
+    }));
+
+    console.log(formData)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    fetch("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+  }
 
   return (
     <>
-      <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-4">
-          <label for="validationCustom01" class="form-label">First name</label>
-          <input type="text" class="form-control" id="validationCustom01" value="Mark" required />
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustom02" class="form-label">Last name</label>
-          <input type="text" class="form-control" id="validationCustom02" value="Otto" required />
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="validationCustomUsername" class="form-label">Username</label>
-          <div class="input-group">
-            <span class="input-group-text" id="inputGroupPrepend">@</span>
-            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required />
-            <div class="invalid-feedback">
-              Please choose a username.
-            </div>
-          </div>
+      <form onSubmit={handleSubmit}>
+
+        <div>
+          <label htmlFor="validationCustom01" className="form-label">author</label>
+          <input type="text" name='author' className="form-control" id="validationCustom01" onChange={handleFormData} value={formData.author} required />
         </div>
 
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required />
-            <label class="form-check-label" for="invalidCheck">
-              Agree to terms and conditions
+        <div>
+          <label htmlFor="validationCustom02" className="form-label">title</label>
+          <input type="text" name='title' className="form-control" id="validationCustom02" onChange={handleFormData} value={formData.title} required />
+        </div>
+
+        <div>
+          <label htmlFor="validationCustom02" className="form-label">body</label>
+          <input type="text" name='body' className="form-control" id="validationCustom02" onChange={handleFormData} value={formData.body} required />
+        </div>
+
+        <div>
+          <div className="form-check">
+            <input className="form-check-input" name='public' type="checkbox" id="invalidCheck" onChange={handleFormData} value={formData.public} />
+            <label className="form-check-label" htmlFor="invalidCheck">
+              make post public
             </label>
-            <div class="invalid-feedback">
-              You must agree before submitting.
-            </div>
           </div>
         </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit">Submit form</button>
+        <div>
+          <button className="btn btn-primary" type="submit">Submit form</button>
         </div>
-      </form>
 
+      </form>
     </>
   )
 }
