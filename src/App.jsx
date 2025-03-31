@@ -3,9 +3,9 @@ import './App.css'
 
 function App() {
   const [formData, setFormData] = useState({
-    author: 'author',
-    title: 'title',
-    body: 'body',
+    author: '',
+    title: '',
+    body: '',
     public: false
   })
 
@@ -19,18 +19,20 @@ function App() {
       ...formData,
       [e.target.name]: value,
     }));
-
-    console.log(formData)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
+    console.log(formData)
     fetch("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data)
+      })
   }
 
   return (
