@@ -59,7 +59,7 @@ function App() {
           <div className="form-check">
             <input className="form-check-input" name='public' type="checkbox" id="invalidCheck" onChange={handleFormData} value={formData.public} />
             <label className="form-check-label" htmlFor="invalidCheck">
-              make post public
+              make post private
             </label>
           </div>
         </div>
