@@ -32,7 +32,7 @@ function App() {
       body: JSON.stringify(formData)
     })
       .then(res => {
-        setCallResult(res.status > 400 && res.status < 300 ? "Success!" : "There was an error")
+        setCallResult(res.status > 400 && res.status < 300 ? "Success!" : `there was an error ${res.status}`)
       })
 
   }
