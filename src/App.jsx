@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRef } from 'react';
 import './App.css'
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     body: '',
     public: false
   })
-
+  const [callResult, setCallResult] = useState('')
 
   function handleFormData(e) {
     const value =
@@ -30,10 +31,10 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
+      .then(res => {
+        setCallResult(res.status > 400 && res.status < 300 ? "Success!" : "There was an error")
       })
+
   }
 
   return (
@@ -65,6 +66,7 @@ function App() {
         </div>
         <div>
           <button className="btn btn-primary" type="submit">Submit form</button>
+          <h1 >{callResult}</h1>
         </div>
 
       </form>
