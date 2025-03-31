@@ -19,6 +19,7 @@ function App() {
       ...formData,
       [e.target.name]: value,
     }));
+    console.log(formData)
   }
 
   function handleSubmit(e) {
